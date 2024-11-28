@@ -35,8 +35,26 @@ FASTCDR_ROOT = $(PROJECT_ROOT)/../thirdparty/fastcdr
 GOOGLETEST_ROOT = $(PROJECT_ROOT)/../googletest
 TINYXML2_ROOT = $(PROJECT_ROOT)/../thirdparty/tinyxml2
 
+#Search paths for all of CMake's find_* functions --
+#headers, libraries, etc.
+#
+#$(QNX_TARGET): for architecture-agnostic files shipped with SDP (e.g. headers)
+#$(QNX_TARGET)/$(CPUVARDIR): for architecture-specific files in SDP
+#$(INSTALL_ROOT)/$(CPUVARDIR): any packages that may have been installed in the staging area
+CMAKE_FIND_ROOT_PATH := $(QNX_TARGET);$(QNX_TARGET)/$(CPUVARDIR);$(INSTALL_ROOT)/$(CPUVARDIR)
+
+#Path to CMake modules; These are CMake files installed by other packages
+#for downstreams to discover them automatically. We support discovering
+#CMake-based packages from inside SDP or in the staging area.
+#Note that CMake modules can automatically detect the prefix they are
+#installed in.
+CMAKE_MODULE_PATH := $(QNX_TARGET)/$(CPUVARDIR)/$(PREFIX)/lib/cmake;$(INSTALL_ROOT)/$(CPUVARDIR)/$(PREFIX)/lib/cmake
+
 CMAKE_ARGS += -DBUILD_SHARED_LIBS=ON \
              -DCMAKE_NO_SYSTEM_FROM_IMPORTED=TRUE \
+             -DCMAKE_PROJECT_INCLUDE=$(PROJECT_ROOT)/project_hooks.cmake \
+             -DCMAKE_FIND_ROOT_PATH="$(CMAKE_FIND_ROOT_PATH)" \
+             -DCMAKE_MODULE_PATH="$(CMAKE_MODULE_PATH)" \
              -DCMAKE_TOOLCHAIN_FILE=$(PROJECT_ROOT)/qnx.nto.toolchain.cmake \
              -DCMAKE_INSTALL_INCLUDEDIR=$(FAST-DDS_INSTALL_ROOT)/usr/include \
              -DCMAKE_INSTALL_PREFIX=$(FAST-DDS_INSTALL_ROOT)/$(CPUVARDIR)/usr \
