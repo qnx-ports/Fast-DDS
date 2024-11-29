@@ -49,7 +49,7 @@ if(EPROSIMA_BUILD_TESTS)
     add_subdirectory(dds/communication)
     add_subdirectory(dds/discovery)
 
-    if(UNIX AND NOT APPLE AND STRICT_REALTIME)
+    if(UNIX AND NOT APPLE AND NOT QNX AND STRICT_REALTIME)
         add_subdirectory(realtime)
     endif()
 endif()
