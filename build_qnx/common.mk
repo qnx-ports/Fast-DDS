@@ -35,6 +35,8 @@ FASTCDR_ROOT = $(PROJECT_ROOT)/../thirdparty/fastcdr
 GOOGLETEST_ROOT = $(PROJECT_ROOT)/../googletest
 TINYXML2_ROOT = $(PROJECT_ROOT)/../thirdparty/tinyxml2
 
+STRICT_REALTIME ?= ON
+
 #Search paths for all of CMake's find_* functions --
 #headers, libraries, etc.
 #
@@ -71,7 +73,7 @@ CMAKE_ARGS += -DBUILD_SHARED_LIBS=ON \
              -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
              -DINCLUDE_INSTALL_DIR=$(FAST-DDS_INSTALL_ROOT)/usr/include \
              -DLIB_INSTALL_DIR=$(FAST-DDS_INSTALL_ROOT)/$(CPUVARDIR)/usr/lib \
-             -DSTRICT_REALTIME=ON
+             -DSTRICT_REALTIME=$(STRICT_REALTIME)
 
 FAST-DDS_CMAKE_ARGS = $(CMAKE_ARGS) \
                      -DQNX_INSTALL_ROOT=$(FAST-DDS_INSTALL_ROOT) \
