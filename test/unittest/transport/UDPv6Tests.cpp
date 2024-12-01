@@ -139,7 +139,7 @@ TEST_F(UDPv6Tests, opening_and_closing_input_channel)
     ASSERT_FALSE (transportUnderTest.CloseInputChannel(multicastFilterLocator));
 }
 
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(__QNX__)
 TEST_F(UDPv6Tests, send_and_receive_between_ports)
 {
     UDPv6Transport transportUnderTest(descriptor);
@@ -260,7 +260,7 @@ TEST_F(UDPv6Tests, send_to_loopback)
     senderThread->join();
     sem.wait();
 }
-#endif // ifndef __APPLE__
+#endif // if !defined(__APPLE__) && !defined(__QNX__)
 
 TEST_F(UDPv6Tests, send_is_rejected_if_buffer_size_is_bigger_to_size_specified_in_descriptor)
 {
@@ -422,7 +422,7 @@ TEST_F(UDPv6Tests, send_to_allowed_interface)
     }
 }
 
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(__QNX__)
 static void GetIP6s(
         std::vector<IPFinder::info_IP>& interfaces)
 {
@@ -645,7 +645,7 @@ TEST_F(UDPv6Tests, open_and_close_two_multicast_transports_with_whitelist)
         ASSERT_TRUE(transport2.CloseInputChannel(multicastLocator));
     }
 }
-#endif // ifndef __APPLE__
+#endif // if !defined(__APPLE__) && !defined(__QNX__)
 
 TEST_F(UDPv6Tests, open_a_blocked_socket)
 {
