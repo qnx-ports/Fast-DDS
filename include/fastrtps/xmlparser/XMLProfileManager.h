@@ -235,6 +235,9 @@ public:
         topic_profiles_.clear();
         xml_files_.clear();
         transport_profiles_.clear();
+        // Tests SEG fault when dynamic_types_ isn't cleared on manual
+        // destruction.
+        dynamic_types_.clear();
     }
 
     /**
