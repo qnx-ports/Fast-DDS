@@ -335,6 +335,15 @@ TEST(TopicTests, InstancePolicyAllocationConsistencyNotKeyed)
     qos2.resource_limits().max_samples_per_instance = 500;
 
     ASSERT_EQ(ReturnCode_t::RETCODE_OK, default_topic1->set_qos(qos2));
+
+    ASSERT_EQ(participant->delete_topic(topic1), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(participant->delete_topic(topic2), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(participant->delete_topic(topic3), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(participant->delete_topic(topic4), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(participant->delete_topic(topic5), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(participant->delete_topic(default_topic1), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(participant->delete_publisher(publisher), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(DomainParticipantFactory::get_instance()->delete_participant(participant), ReturnCode_t::RETCODE_OK);
 }
 
 /*
@@ -463,6 +472,15 @@ TEST(TopicTests, InstancePolicyAllocationConsistencyKeyed)
     qos2.resource_limits().max_samples_per_instance = 500;
 
     ASSERT_EQ(ReturnCode_t::RETCODE_OK, default_topic1->set_qos(qos2));
+
+    ASSERT_EQ(participant->delete_topic(topic1), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(participant->delete_topic(topic2), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(participant->delete_topic(topic4), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(participant->delete_topic(topic5), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(participant->delete_topic(topic6), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(participant->delete_topic(default_topic1), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(participant->delete_publisher(publisher), ReturnCode_t::RETCODE_OK);
+    ASSERT_EQ(DomainParticipantFactory::get_instance()->delete_participant(participant), ReturnCode_t::RETCODE_OK);
 }
 
 } // namespace dds
