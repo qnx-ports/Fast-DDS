@@ -295,7 +295,7 @@ if(SECURITY AND QNX)
     set(OPENSSL_LIBRARIES ssl crypto)
 endif()
 
-if(QNX)
+if(QNX AND ${CMAKE_CXX_COMPILER_VERSION} VERSION_GREATER_EQUAL 12.2.0)
     link_libraries(fsnotify)
 endif()
 
