@@ -18,8 +18,10 @@
 #include <limits>
 
 #include <pthread.h>
-#include <sys/resource.h>
+#ifndef __QNX__ // not available on QNX
 #include <sys/sysinfo.h>
+#endif
+#include <sys/resource.h>
 #include <sys/time.h>
 #include <sys/types.h>
 
@@ -95,9 +97,7 @@ static void configure_current_thread_scheduler(
     // Set Scheduler Class and Priority
     //
 
-    if ((sched_class == SCHED_OTHER) ||
-            (sched_class == SCHED_BATCH) ||
-            (sched_class == SCHED_IDLE))
+    if (sched_class == SCHED_OTHER)
     {
         //
         // BATCH and IDLE do not have explicit priority values.
@@ -145,6 +145,7 @@ static void configure_current_thread_affinity(
         const char* thread_name,
         uint64_t affinity_mask)
 {
+#ifndef __QNX__ // not available on QNX
     int a;
     int result;
     int cpu_count;
@@ -195,6 +196,7 @@ static void configure_current_thread_affinity(
         EPROSIMA_LOG_ERROR(SYSTEM, "Problem to set affinity of thread with id [" << self_tid << "," << thread_name << "] to value " << affinity_mask << ". Error '" << strerror(
                     result) << "'");
     }
+#endif
 }
 
 void apply_thread_settings_to_current_thread(
